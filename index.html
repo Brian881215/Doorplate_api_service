@@ -4,15 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
-    <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
+    <!-- <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script> -->
+    <!-- <script src="./model.json"></script> -->
+    <!-- 
+    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/dict.txt"></script>
+    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/group1-shard1of3.bin"></script>
+    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/group1-shard2of3.bin"></script>
+    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/group1-shard3of3.bin"></script>
+    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/model.json"></script> -->
+
     <title>doorplage</title>
 </head>
 <body>
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
     <img id="salad" crossorigin="anonymous" src="https://storage.googleapis.com/tfjs-testing/tfjs-automl/object_detection/test_image.jpg">
     <script>
         async function run() {
-          const model = await tf.automl.loadObjectDetection('model.json');
+          const model = await tf.automl.loadObjectDetection('./tensorflow/model.json');
           const img = document.getElementById('salad');
           const options = {score: 0.5, iou: 0.5, topk: 20};
           const predictions = await model.detect(img, options);
