@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
+    <title>doorplage</title>
+</head>
+<body>
+    <img id="salad" crossorigin="anonymous" src="https://storage.googleapis.com/tfjs-testing/tfjs-automl/object_detection/test_image.jpg">
+    <script>
+        async function run() {
+          const model = await tf.automl.loadObjectDetection('model.json');
+          const img = document.getElementById('salad');
+          const options = {score: 0.5, iou: 0.5, topk: 20};
+          const predictions = await model.detect(img, options);
+          console.log(predictions);
+          // Show the resulting object on the page.
+          const pre = document.createElement('pre');
+          pre.textContent = JSON.stringify(predictions, null, 2);
+          document.body.append(pre);
+        }
+        run();
+    </script>
+</body>
+</html>
