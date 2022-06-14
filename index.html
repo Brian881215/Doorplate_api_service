@@ -1,26 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hans-TW">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="https://unpkg.com/@tensorflow/tfjs"></script>
-    <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script> -->
-    <!-- <script src="./model.json"></script> -->
-    <!-- 
-    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/dict.txt"></script>
-    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/group1-shard1of3.bin"></script>
-    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/group1-shard2of3.bin"></script>
-    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/group1-shard3of3.bin"></script>
-    <script src="https://storage.googleapis.com/doorplate_trained_model2/model-3514131521348829184/model.json"></script> -->
-
-    <title>doorplage</title>
-</head>
-<body>
+	<link rel="stylesheet" href="./css/style.css" />
     <script src="https://unpkg.com/@tensorflow/tfjs"></script>
     <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
-    <img id="salad" crossorigin="anonymous" src="https://storage.googleapis.com/tfjs-testing/tfjs-automl/object_detection/test_image.jpg">
-    <script>
+    <title>門牌辨識專案</title>
+</head>
+<body>
+	<header>
+		<img src="./images/img_logo.svg" alt="logo" />
+	</header>
+	<div id="container">
+		<div id="box">
+			<img src="./images/img_default.svg" alt="說明" />
+		</div>
+	</div>
+	<footer>
+		<div>
+			<button>啟動拍攝</button>
+			<button>擷取照片</button>
+		</div>
+	</footer>
+
+
+    <!-- <img id="salad" crossorigin="anonymous" src="https://storage.googleapis.com/tfjs-testing/tfjs-automl/object_detection/test_image.jpg"> -->
+    <!-- <img id="salad" crossorigin="anonymous" src="./images/plate.jpg"> -->
+
+
+	
+    
+	
+
+    <!-- <script>
         async function run() {
           const model = await tf.automl.loadObjectDetection('./tensorflow/model.json');
           const img = document.getElementById('salad');
@@ -33,6 +47,6 @@
           document.body.append(pre);
         }
         run();
-    </script>
+    </script> -->
 </body>
 </html>

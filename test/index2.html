@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="./style3.css" /> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <title>照相截圖測試</title>
+</head>
+<body>
+    <h1>0614 測試</h1>
+    <h2>時間：1158</h2>
+    
+    <button id="start-camera">開啟相機</button>
+    <video id="video" autoplay="autoplay" playsinline="playsinline"></video>
+    <button id="click-photo">拍攝照片</button>
+    <canvas id="canvas"></canvas>
+
+    <!-- base64 轉 img -->
+    <div id="main"></div>
+    
+    <script>
+        let camera_button = document.querySelector("#start-camera");
+        let video = document.querySelector("#video");
+        let click_button = document.querySelector("#click-photo");
+        let canvas = document.querySelector("#canvas");
+
+        // 影像串流
+        camera_button.addEventListener('click', async function() {
+            console.log($(window).width());
+            if($(window).width() > 640){
+                $("#video").attr("width",640);
+                $("#video").attr("height",480);
+            }else {
+                $("#video").attr("width",240);
+                $("#video").attr("height",320);
+            }
+
+            let stream = await navigator.mediaDevices.getUserMedia(
+                { video: {
+                    facingMode:"environment"
+                }, 
+                  audio: false }
+            );
+            video.srcObject = stream;
+        });
+
+        // 擷取照片
+        click_button.addEventListener('click', function() {
+            var w = $("#video").attr("width");
+            var h = $("#video").attr("height");
+
+            $("#canvas").attr("width",w);
+            $("#canvas").attr("height",h);
+
+            console.log(w);
+            console.log(h);
+
+            canvas.getContext('2d').drawImage(video, 0, 0, w, h);
+            let base64img = canvas.toDataURL('image/jpeg');
+
+            // data url of the image
+            console.log(base64img);
+
+            // 將 base64 轉成img
+            function base64ToImage(base64img, callback) {
+                var img = new Image();
+                img.onload = function() {
+                    callback(img);
+                }
+                img.src = base64img;
+            }
+            base64ToImage(base64img, function(img){
+                document.getElementById('main').appendChild(img);
+            })
+        });
+   
+    </script>
+</body>
+</html>
