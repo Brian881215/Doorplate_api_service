@@ -8,7 +8,8 @@
     <script src="https://unpkg.com/@tensorflow/tfjs"></script>
     <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <title>門牌辨識專案</title>
+	<link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <title>門牌辨識自動化程式</title>
 </head>
 <body>
 	<header>
@@ -23,9 +24,11 @@
 				<video id="video" autoplay="autoplay" playsinline="playsinline"></video>
 				<canvas id="canvas"></canvas>
 				<div id="frame"></div>
-				<!-- <img id="salad2" crossorigin="anonymous" src="https://storage.googleapis.com/tfjs-testing/tfjs-automl/object_detection/test_image.jpg"> -->
-				<!-- <img id="salad2" crossorigin="anonymous" src="./images/plate.jpg"> -->
 			</div>
+		</div>
+		<div id="addressBox" >
+			<img src="./images/img_arrow.svg" />
+			<div id="address">門牌住址顯示</div>
 		</div>
 	</div>
 	<footer>
@@ -36,7 +39,5 @@
 	</footer>
 
 	<script src="./js/app.js"></script>
-    <!-- <img id="salad" crossorigin="anonymous" src="https://storage.googleapis.com/tfjs-testing/tfjs-automl/object_detection/test_image.jpg"> -->
-    <!-- <img id="salad" crossorigin="anonymous" src="./images/plate.jpg"> -->
 </body>
 </html> 
