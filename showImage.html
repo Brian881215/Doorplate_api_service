@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<style>
+	#output_box img {
+	    /*position: absolute;*/
+	    top:0;
+	    left:0;
+	    display: block;
+	}
+	#output_box #frame {
+	    /*position: absolute;*/
+	    top:0;
+	    left:0;
+	    width:100px;
+	    height: 50px;
+	    border: 3px solid rgba(255,0,0,0.5);
+	    z-index:1000;
+	    visibility: hidden;
+	}
+	</style>	
+</head>
+
+<body> 
+	<H1> 圖片顯示器</H1>
+	<div id="output_box" class="box">
+		<input type="file" webkitdirectory="true" id="my_test">
+		<div id="pics_area"></div>
+		<canvas id="canvas"></canvas>
+		<div id="frame"></div>
+	</div>
+
+	<script> 
+	document.getElementById('my_test').addEventListener('change', async function(event) {	
+	//my_test 為觸發運作的按鈕
+	let canvas = document.querySelector("#canvas");
+	var tmp_img_data;
+	var ctx = canvas.getContext("2d");
+	function showFrame(){
+	    return new Promise((resolve, reject)=>{
+	    	console.log(predictions);
+	        if(predictions !== null){
+	            // console.log(predictions);
+	            var info = predictions[0].box;
+	            // console.log(typeof(info.left));
+	            // console.log(info.top);
+	            // console.log(info.width);
+	            // console.log(info.height);
+	            $("#frame").css({"top":info.top,"left":info.left,"width":info.width,"height":info.height,"visibility":"visible"});
+	        }
+	    })
+	}
+
+	function cropImg(item){
+
+	    var element = document.getElementById('frame'),
+	    style = window.getComputedStyle(element),
+	    top = style.getPropertyValue('top');
+	    // console.log(top);
+	    const topInt = parseInt(top, 10);
+	    var topStr = Number(topInt.toString());
+	    left=style.getPropertyValue('left');
+	    const leftInt = parseInt(left, 10);
+	    var leftStr = Number(leftInt.toString());
+	    // console.log(typeof(leftStr));
+	    // console.log(leftStr);
+	    width=style.getPropertyValue('width');
+	    const widthInt = parseInt(width, 10);
+	    var widthStr = Number(widthInt.toString());
+	    // console.log(widthStr);
+	    height=style.getPropertyValue('height');
+	    const heightInt = parseInt(height, 10);
+	    var heightStr = Number(heightInt.toString());
+
+	    $("#canvas").attr({"width":widthStr,"height":heightStr});
+	    ctx.drawImage(item,leftStr,topStr,widthStr,heightStr,0,0,widthStr,heightStr);
+	    ctx.save();
+	    tmp_img_data=canvas.toDataURL('image1/jpg',1.0);
+	    // console.log(tmp_img_data);
+
+	    // const downloadBtn = document.querySelector("button.download");
+	    // //bind a click listener to the download button
+	    // downloadBtn.addEventListener('click', function() {
+	    //     //create a temporary link for the download item
+        // let tempLink = document.createElement('a');
+      
+        // //generate a new filename
+        // let fileName = `image-cropped.jpg`;
+        
+        // //configure the link to download the resized image
+        // tempLink.download = fileName;
+        // tempLink.href = tmp_img_data;
+      
+        //trigger a click on the link to start the download
+        // tempLink.click();
+	    // })
+	}
+
+	const model = await tf.automl.loadObjectDetection('tensorflow/model.json');
+	const options = {score: 0.5, iou: 0.5, topk: 20};
+	var predictions;
+	var getImage;;
+	var base64;
+	var getBase64;
+	// document.getElementById('my_test').addEventListener('change', async function(event) {	//my_test 為觸發運作的按鈕
+	let files = event.target.files;	//選取之目標目錄內的檔案清單
+	let listing = document.getElementById('pics_area');	//(透過id)取得要放置圖片的標籤位置
+
+	for(let i=0; i<files.length; i++) {
+		let item = document.createElement("img");	//產生圖片標籤
+		item.src = files[i].webkitRelativePath;	//
+		// 設定圖片的來源位置
+		item.width= "3000";
+		item.height = "4000";
+		item.style.padding = "50px 10px 20px 30px"; //排版用
+		
+		item.id = i;
+		item.crossOrigin = 'anonymous';
+		listing.appendChild(item);
+		
+        // var img = item.src;
+        getImage = document.getElementById(i);
+
+			// Get the remote image as a Blob with the fetch API
+		let response = await fetch(getImage.src)
+    		.then((res) => res.blob())
+    		.then((blob) => {
+        	// Read the Blob as DataURL using the FileReader API
+        	const reader = new FileReader();
+        	reader.onloadend = (async) => {
+
+            // console.log(reader.result);
+            // console.log(typeof(reader.result));
+            // // Logs data:image/jpeg;base64,wL2dvYWwgbW9yZ...
+            getImage.src = reader.result;
+            // console.log(getImage.src);
+            // predictions = await model.detect(getImage, options);
+
+            // Convert to Base64 string
+         //    base64 = getBase64StringFromDataURL(reader.result);
+         //    console.log(base64);
+         //    // Logs wL2dvYWwgbW9yZ...
+        	 };
+        	
+        	reader.readAsDataURL(blob);
+    	});
+        // console.log(img);
+        // console.log(getImage.src);
+        console.log(item);
+        // console.log(item.width);
+        console.log(item.src);
+        // const options = {score: 0.5, iou: 0.5, topk: 20};
+        // console.log(getBase64.src);
+        predictions = await model.detect(item, options); 
+        showFrame();
+        cropImg(item);
+        var a = document.createElement('a');
+        if(i<10){
+	   		a.download = 'SinyiImg-000'+i+'.jpg';
+		}else if(i<100){
+			a.download = 'SinyiImg-00'+i+'.jpg';
+		}else if(i<1000){
+			a.download = 'SinyiImg-0'+i+'.jpg';
+		}else {
+			a.download = 'SinyiImg-'+i+'.jpg';
+		}
+
+	    a.href = tmp_img_data;
+	    document.body.appendChild(a);
+	    a.click();
+	    document.body.removeChild(a);
+        // let tempLink = document.createElement('a');
+  		console.log(i);
+        //generate a new filename
+        // let fileName = `image-cropped.jpg`;
+        
+        //configure the link to download the resized image
+        // tempLink.download = fileName;
+        // tempLink.href = tmp_img_data;
+	}
+});
+	</script> 
+
+</body>
+</html>

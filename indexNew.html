@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./css/style.css" />
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <title>裁切圖片</title>
+</head>
+<body>
+	
+	<input type="file" webkitdirectory="true" id="my_test">
+	<div id="pics_area">
+	</div>
+
+
+	<div id="container">
+		<div id="box">
+			<div id="default_box" class="box">
+				<!-- <img src="./images/img_default.svg" alt="說明" /> -->
+			</div>
+			<div id="output_box" class="box">
+				<video id="video" autoplay="autoplay" playsinline="playsinline"></video>
+				<canvas id="canvas"></canvas>
+				<div id="frame"></div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div>
+			<button class="download">下載圖片</button>
+		</div>
+	</footer>
+
+	<script src="./js/appNew.js"></script>
+</body>
+</html> 

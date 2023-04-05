@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+<head>
+  <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+<body>
+  <div>
+    <canvas id="myCanvas" width="500" height="300"></canvas>
+    <img id="img1" alt="">
+  </div>
+  <button id="make">生成</button>
+
+  <script type="text/javascript">
+  var canvas = document.getElementById("myCanvas");
+  var context = canvas.getContext("2d");
+
+  var x = canvas.width/2;
+  var y = canvas.height/2;
+  context.font = "48px arial";
+  context.textAlign = "center";
+  //context.fillText('Hello Cavans!!',x,y);
+  context.strokeStyle = "blue"; // stroke color
+  context.strokeText('Hello Cavans!!',x,y);
+
+  $("#make").click(function(){
+    var myImg = document.querySelector("#img1");
+    myImg.src = canvas.toDataURL("image/png");
+  })
+
+  </script>
+</body>
+</html>
+
